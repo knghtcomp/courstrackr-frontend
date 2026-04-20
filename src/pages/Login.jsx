@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const LogInPageStudent = () => {
   const [activeTab, setActiveTab] = useState("student");
@@ -6,6 +7,7 @@ export const LogInPageStudent = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="flex w-full min-h-screen bg-white font-sans overflow-hidden">
@@ -27,7 +29,7 @@ export const LogInPageStudent = () => {
               <h1 className="text-[40px] xl:text-[45px] font-bold text-white leading-none font-['Calistoga'] m-0">
                 COURSETRACKR
               </h1>
-              <h2 className="text-[22px] xl:text-[25px] text-[#FFCC00] font-['Calistoga'] m-0 mt-1">
+              <h2 className="text-[22px] xl:text-[25px] text-[#FFCC00] font-['Calistoga'] m-0 mt-0">
                 Academic Management Tool
               </h2>
             </div>
@@ -93,13 +95,16 @@ export const LogInPageStudent = () => {
           <form className="space-y-5">
             
             <div>
-              <label className="block text-black font-extrabold mb-2 font-['Calistoga'] text-lg tracking-wide">ID Number</label>
-              <input
+              {/* THE FIX: We use a ternary operator to swap the text based on the active tab */}
+              <label className="block text-black font-extrabold mb-2 font-['Calistoga'] text-lg tracking-wide">
+                {activeTab === 'student' ? 'ID Number' : 'Admin Number'}
+              </label>
+                <input
                 type="text"
                 value={idNumber}
                 onChange={(e) => setIdNumber(e.target.value)}
                 className="w-full h-[52px] px-6 bg-[#E9EBEF] rounded-full outline-none focus:ring-2 focus:ring-[#003366] font-sans text-lg border border-transparent"
-              />
+                />
             </div>
 
             <div>
@@ -131,9 +136,13 @@ export const LogInPageStudent = () => {
                 />
                 <span className="text-[14px] font-extrabold text-black font-['Calistoga'] tracking-wide">Remember me</span>
               </label>
-              <a href="#" className="text-[14px] font-extrabold text-[#003366] font-['Calistoga'] hover:underline tracking-wide">
-                Forgot Password?
-              </a>
+              <button 
+                type="button"
+                onClick={() => navigate('/forgot-password')}
+                className="text-[14px] font-extrabold text-[#003366] font-['Calistoga'] hover:underline tracking-wide bg-transparent border-none p-0 cursor-pointer"
+              >
+              Forgot Password?
+              </button>
             </div>
 
             <button
@@ -149,14 +158,19 @@ export const LogInPageStudent = () => {
               <div className="flex-1 border-t border-black/30"></div>
             </div>
 
+
+            
+            {/* Update your Sign Up button in Login.jsx to look exactly like this */}
             <button
               type="button"
+              onClick={() => navigate('/signup')} 
               className="w-full h-[60px] bg-[#003366] text-white text-[20px] font-bold rounded-full hover:bg-[#002244] transition-colors font-['Calistoga'] tracking-wider shadow-lg"
             >
               SIGN UP
             </button>
           </form>
 
+          
           <div className="text-center mt-6">
             <p className="text-[12px] text-black">
               Need help? Contact <a href="mailto:registrar@ustp.ph" className="text-[#003366] hover:underline font-bold">registrar@ustp.ph</a>
